@@ -4,6 +4,6 @@ import java.io.FileNotFoundException;
 
 public interface FortuneService {
 	
-	public String getFortune() throws FileNotFoundException;
+	public String getFortune();
 
 }

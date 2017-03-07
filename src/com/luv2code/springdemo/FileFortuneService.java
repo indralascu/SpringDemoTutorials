@@ -9,6 +9,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
+import javax.annotation.PostConstruct;
+
 import org.springframework.stereotype.Component;
 
 @Component
@@ -16,8 +18,12 @@ public class FileFortuneService implements FortuneService {
  
 	List<String> fortunes;
 	Random random = new Random();
-	@Override
-	public String getFortune() throws FileNotFoundException {
+	
+
+	@PostConstruct
+	public void readFromFileSystem() throws FileNotFoundException {
+		
+		System.out.println("Firstly I am in the PostConstruct method");
 		fortunes = new ArrayList<String>();
 		BufferedReader in = new BufferedReader(new FileReader("File/fortunes.txt"));
 		
@@ -33,7 +39,15 @@ public class FileFortuneService implements FortuneService {
 			e.printStackTrace();
 		}
 		
+	}
+	
+	@Override
+	public String getFortune() {
+		
+		System.out.println("Only now I entered the getFortune() method, the readFromFileMethod was not explicitly called");
+		
 		return fortunes.get(random.nextInt(fortunes.size()));
+		
 	}
 
 }
